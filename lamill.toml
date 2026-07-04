@@ -1,0 +1,53 @@
+# lamill.toml — per-site config consumed by lamill (portfolio/ops) and rankmill (content/audits).
+# [content] = stable identity, authored by hand. [todo] = volatile work state.
+# rankmill output lives in sites/<domain>/rankmill-output/, not here.
+
+schema = "lamill-toml-v1"
+
+[deploy]
+platform = "cf-pages"
+production_branch = "main"
+custom_domains = [
+    "mcpscan.app",
+]
+
+[index]
+indexnow_key = "824fd8af4229dfd29c51c932176aa663"
+indexnow_enabled = true
+
+[stack]
+framework = "astro"
+
+# Tracked todos for mcpscan.app. status: "done" | "open".
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Check SEO: GSC indexation + coverage (revisit ~2026-07-18)"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Verify GA4 is receiving data (check Realtime after first traffic)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
+
+[content]
+# Declarative content identity for this site.
+# Authored by the human; consumed by rankmill to generate drafts and run audits.
+# Leave fields empty until you have a deliberate answer. Empty is better than wrong.
+site_type = "tool"
+primary_keyword = "mcp security"
+secondary_keywords = [
+    "mcp security best practices",
+    "mcp permissions",
+    "mcp authorization",
+    "least privilege for agents",
+]
+icp = "A 5–40 person startup or platform team shipping agentic features to production, running roughly 5–20 MCP servers and a growing fleet of agents, with at least one person who owns security or is being asked security questions by customers or a SOC2 auditor. They already feel the pain — they can't answer \"what can this agent reach\" without reading configs by hand — and they are technical enough to adopt a CLI first and expand into a paid dashboard. They are self-motivated by risk, not compelled by a named regulator or a dated deadline, which is the ICP's central weakness and why the buying urgency is softer than a forcing-function product."
+urgency_trigger = "Detect and remediate over-privileged or orphaned agent connections before they turn into security incidents and before customers or auditors demand proof of access."
+penalty = "Unnoticed over-privileged agents can cause security incidents and leave teams unable to answer 'what can this agent reach' for customers or SOC2 auditors."
+tone = "first-hand, technical, practical, no fluff"
+law = ""                  # statute or regulation if applicable, else empty
