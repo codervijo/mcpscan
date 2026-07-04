@@ -1,0 +1,12 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import NewScanPage from "@/components/app/NewScan.tsx";
+---
+<Layout
+  title="New scan — Stricture"
+  description="Upload an MCP config JSON, or paste it directly, to run a least-privilege scan."
+  path="/scans/new/"
+  noindex
+>
+  <NewScanPage client:only="react" />
+</Layout>

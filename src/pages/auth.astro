@@ -1,0 +1,12 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import AuthPage from "@/components/app/Auth.tsx";
+---
+<Layout
+  title="Sign in — Stricture"
+  description="Sign in or create your Stricture account to scan MCP configs."
+  path="/auth/"
+  noindex
+>
+  <AuthPage client:only="react" />
+</Layout>

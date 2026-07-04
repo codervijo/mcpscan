@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ScanResultsPage from "@/components/app/ScanResults.tsx";
+
+// Scan detail is keyed by a runtime Supabase row id, so there is no static set
+// of paths to prerender under `output: 'static'`. Emit an empty path set — the
+// page is a client:only island that reads the id from window.location and
+// fetches the scan at runtime. Serving arbitrary /scans/<id>/ URLs needs an SSR
+// adapter or SPA fallback; see src/lib/server-todo.md.
+export function getStaticPaths() {
+  return [];
+}
+---
+<Layout title="Scan results — Stricture" path="/scans/" noindex>
+  <ScanResultsPage client:only="react" />
+</Layout>

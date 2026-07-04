@@ -1,0 +1,12 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import DashboardPage from "@/components/app/Dashboard.tsx";
+---
+<Layout
+  title="Dashboard — Stricture"
+  description="Audit history for your MCP deployments."
+  path="/dashboard/"
+  noindex
+>
+  <DashboardPage client:only="react" />
+</Layout>

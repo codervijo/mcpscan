@@ -1,0 +1,45 @@
+---
+// Shared chrome for the interactive app routes. The visible header/footer live
+// in the React <Shell> island; this Layout just supplies the HTML document,
+// global styles, and per-route SEO head. Canonical MUST end in a trailing
+// slash to match astro.config.mjs `trailingSlash: 'always'` (CHECK_161).
+import "../styles/global.css";
+
+const site = "https://mcpscan.app";
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string; // route path with trailing slash, e.g. "/dashboard/"
+  noindex?: boolean;
+}
+const {
+  title = "Stricture — Least-privilege scanner for MCP agents",
+  description = "Stricture audits MCP server configs, maps agent-to-tool access, and flags over-permissioned connections.",
+  path = "/",
+  noindex = false,
+} = Astro.props;
+const canonical = `${site}${path}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="mcpscan.app" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

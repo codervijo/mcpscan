@@ -1,13 +1,44 @@
 ---
-// src/pages/index.astro
+// src/pages/index.astro — Stricture landing (ported from genai/src/pages/Landing.tsx).
+// Kept as pure static Astro so the marketing copy is in the prerendered HTML for
+// SEO. The SEO regression test (src/__tests__/seo.test.js) reads THIS file and
+// checks the baseline tags below, so the head stays inline here rather than in a
+// shared Layout.
+import "../styles/global.css";
+
 const site = "https://mcpscan.app";
-const title = "mcpscan.app";
-const description = "<fill in: 1-2 sentence value prop for SEO description>";
+const title = "Stricture — Least-privilege scanner for MCP agents";
+const description =
+  "Stricture inspects your MCP server configs, maps agent-to-tool access, flags over-permissioned connections, and exports a signed audit report.";
 // Canonical MUST match the served URL incl. trailing slash (trailingSlash:
-// 'always' in astro.config.mjs). For a sub-page, derive it the same way:
-//   const canonical = `${site}/<route>/`;   // e.g. `${site}/about/`
-// A no-slash canonical 308-redirects and breaks indexing (CHECK_161).
+// 'always' in astro.config.mjs). A no-slash canonical 308-redirects and breaks
+// indexing (CHECK_161).
 const canonical = `${site}/`;
+
+// Shared button class recipes (ported from the shadcn <Button> cva variants).
+const btnBase =
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
+const btnPrimary = "bg-primary text-primary-foreground hover:bg-primary/90";
+const btnOutline = "border border-input bg-background hover:bg-accent hover:text-accent-foreground";
+const btnGhost = "hover:bg-accent hover:text-accent-foreground";
+
+const features = [
+  {
+    icon: "search",
+    title: "Parse configs",
+    body: "Drop in your mcp.json. Stricture extracts servers, commands, tools, transports, env vars, and credential hints.",
+  },
+  {
+    icon: "file-warning",
+    title: "Score risk",
+    body: "A deterministic risk engine flags shell execution, broad DB access, secrets in config, unknown remotes, and more.",
+  },
+  {
+    icon: "network",
+    title: "Map access",
+    body: "See exactly which agents can reach which tools. Spot stale references and over-scoped agents.",
+  },
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -31,8 +62,7 @@ const canonical = `${site}/`;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- JSON-LD structured data: Organization + WebSite (static; domain
-         is known at scaffold time. Update description by hand if needed.) -->
+    <!-- JSON-LD structured data: Organization + WebSite -->
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,14 +70,14 @@ const canonical = `${site}/`;
     {
       "@type": "Organization",
       "@id": "https://mcpscan.app/#organization",
-      "name": "mcpscan.app",
+      "name": "Stricture",
       "url": "https://mcpscan.app/"
     },
     {
       "@type": "WebSite",
       "@id": "https://mcpscan.app/#website",
       "url": "https://mcpscan.app/",
-      "name": "mcpscan.app",
+      "name": "Stricture",
       "publisher": { "@id": "https://mcpscan.app/#organization" }
     }
   ]
@@ -55,9 +85,78 @@ const canonical = `${site}/`;
     </script>
   </head>
   <body>
-    <main>
-      <h1>{title}</h1>
-      <p>Scaffolded via <code>portfolio new bootstrap</code>.</p>
-    </main>
+    <div class="min-h-screen flex flex-col bg-background">
+      <header class="border-b border-border">
+        <div class="container flex items-center justify-between h-14">
+          <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+            <svg class="h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            <span>Stricture</span>
+          </a>
+          <div class="flex items-center gap-2">
+            <a href="/auth/" class={`${btnBase} ${btnGhost} h-9 rounded-md px-3`}>Sign in</a>
+            <a href="/auth/" class={`${btnBase} ${btnPrimary} h-9 rounded-md px-3`}>Get started</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1">
+        <section class="container py-24 text-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border text-xs text-muted-foreground mb-6">
+            <svg class="h-3.5 w-3.5 text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            MCP security · v0.1
+          </div>
+          <h1 class="text-5xl md:text-6xl font-semibold tracking-tight max-w-3xl mx-auto">
+            Least-privilege scanner for <span class="text-primary">MCP agents</span>.
+          </h1>
+          <p class="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+            Stricture inspects your MCP server configs, maps agent-to-tool access, flags over-permissioned
+            connections, and exports a signed audit report.
+          </p>
+          <div class="mt-8 flex items-center justify-center gap-3">
+            <a href="/auth/" class={`${btnBase} ${btnPrimary} h-11 rounded-md px-8`}>Run a scan</a>
+            <a href="#how" class={`${btnBase} ${btnOutline} h-11 rounded-md px-8`}>How it works</a>
+          </div>
+        </section>
+
+        <section id="how" class="container py-16 grid md:grid-cols-3 gap-6">
+          {features.map((f) => (
+            <div class="rounded-md border border-border bg-card p-6">
+              {f.icon === "search" && (
+                <svg class="h-5 w-5 text-primary mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              )}
+              {f.icon === "file-warning" && (
+                <svg class="h-5 w-5 text-primary mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              )}
+              {f.icon === "network" && (
+                <svg class="h-5 w-5 text-primary mb-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+              )}
+              <h3 class="font-semibold">{f.title}</h3>
+              <p class="text-sm text-muted-foreground mt-2">{f.body}</p>
+            </div>
+          ))}
+        </section>
+
+        <section class="container py-16">
+          <div class="rounded-md border border-border bg-card p-8 flex flex-col md:flex-row items-start gap-6">
+            <svg class="h-8 w-8 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg">CLI-first, dashboard-friendly</h3>
+              <p class="text-sm text-muted-foreground mt-2">
+                The scanner core is a pure function over your config JSON — same engine the dashboard runs
+                is meant to ship as <code class="text-primary">npx stricture</code> next.
+              </p>
+            </div>
+            <a href="/auth/" class={`${btnBase} ${btnOutline} h-10 px-4 py-2`}>
+              <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              Export audit report
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="border-t border-border py-6 text-center text-xs text-muted-foreground">
+        Stricture · Least-privilege scanner for MCP agents
+      </footer>
+    </div>
   </body>
 </html>

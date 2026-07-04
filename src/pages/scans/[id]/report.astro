@@ -1,0 +1,13 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ReportPage from "@/components/app/Report.tsx";
+
+// Same runtime-id constraint as scans/[id].astro — no static paths to prerender.
+// The client:only island reads the id from window.location. See server-todo.md.
+export function getStaticPaths() {
+  return [];
+}
+---
+<Layout title="Audit report — Stricture" path="/scans/" noindex>
+  <ReportPage client:only="react" />
+</Layout>

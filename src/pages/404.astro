@@ -1,0 +1,27 @@
+---
+// Ported from genai/src/pages/NotFound.tsx. Astro serves src/pages/404.astro
+// as the not-found page, so no client-side catch-all route is needed.
+import "../styles/global.css";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — Stricture</title>
+    <meta name="description" content="Page not found." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="flex min-h-screen items-center justify-center bg-muted">
+      <div class="text-center">
+        <h1 class="mb-4 text-4xl font-bold">404</h1>
+        <p class="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
+        <a href="/" class="text-primary underline hover:text-primary/90">
+          Return to Home
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
