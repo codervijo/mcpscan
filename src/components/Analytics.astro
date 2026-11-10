@@ -1,0 +1,12 @@
+---
+// GA4 — LaMill Sites account. Measurement IDs are public; committed
+// here so the live tag never depends on a dashboard env var (ADR-0029).
+const GA_ID = "G-4EKHFDN8QC";
+---
+<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+<script is:inline define:vars={{ GA_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", GA_ID);
+</script>

@@ -1,4 +1,5 @@
 ---
+import Analytics from "../components/Analytics.astro";
 // Shared chrome for the interactive app routes. The visible header/footer live
 // in the React <Shell> island; this Layout just supplies the HTML document,
 // global styles, and per-route SEO head. Canonical MUST end in a trailing
@@ -38,6 +39,7 @@ const canonical = `${site}${path}`;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <Analytics />
   </head>
   <body>
     <slot />

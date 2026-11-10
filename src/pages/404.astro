@@ -1,4 +1,5 @@
 ---
+import Analytics from "../components/Analytics.astro";
 // Ported from genai/src/pages/NotFound.tsx. Astro serves src/pages/404.astro
 // as the not-found page, so no client-side catch-all route is needed.
 import "../styles/global.css";
@@ -12,6 +13,7 @@ import "../styles/global.css";
     <meta name="description" content="Page not found." />
     <meta name="robots" content="noindex" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Analytics />
   </head>
   <body>
     <div class="flex min-h-screen items-center justify-center bg-muted">
